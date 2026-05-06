@@ -14,6 +14,15 @@ spec:
       labels:
         app: nfs-exporter
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: NotIn
+                values:
+                - beholder
       securityContext:
         runAsNonRoot: true
         runAsUser: 65534
