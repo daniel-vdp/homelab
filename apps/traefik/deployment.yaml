@@ -22,7 +22,7 @@ spec:
         fsGroup: 65532
       containers:
       - name: traefik
-        image: traefik:3.6
+        image: traefik:v3.7
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: false
