@@ -3,6 +3,13 @@ name: PR Validation
 on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
+    paths:
+      - 'apps/**'
+      - 'clusters/**'
+      - 'namespaces/**'
+      - '.trivyignore'
+      - 'polaris-config.yaml'
+      - '.github/workflows/pr-validation.yml'
 
 jobs:
   secret-detection:
