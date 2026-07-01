@@ -1,0 +1,22 @@
+# node-exporter requires host-level access for node metrics collection
+KSV-0008
+KSV-0009
+KSV-0010
+KSV-0024
+KSV-0121
+
+# wireguard requires SYS_MODULE to load the WireGuard kernel module
+KSV-0120
+
+# readOnlyRootFilesystem - classified as warning; many apps require write access at runtime
+KSV-0014
+
+# default security context - accepted for apps that don't override it
+KSV-0118
+
+# ClusterRole secrets access: sealed-secrets controller must manage secrets to function;
+# traefik needs secrets access for TLS certificate management
+KSV-0041
+
+# node proxy access required for Prometheus metrics scraping
+KSV-0047
