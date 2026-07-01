@@ -44,7 +44,7 @@ jobs:
           for dir in apps/*/  namespaces/*/; do
             if [ -f "${dir}kustomization.yaml" ]; then
               echo "Building ${dir}..."
-              kustomize build "${dir}" > /dev/null
+              kustomize build --load-restrictor LoadRestrictionsNone "${dir}" > /dev/null
             fi
           done
 

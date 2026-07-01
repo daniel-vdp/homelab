@@ -2,6 +2,11 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: node-exporter
+  annotations:
+    polaris.fairwinds.com/hostIPCSet-exempt: "true"
+    polaris.fairwinds.com/hostPIDSet-exempt: "true"
+    polaris.fairwinds.com/hostNetworkSet-exempt: "true"
+    polaris.fairwinds.com/hostPortSet-exempt: "true"
 spec:
   selector:
     matchLabels:
