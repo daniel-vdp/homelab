@@ -1,0 +1,20 @@
+checks:
+  cpuRequestsMissing: error
+  cpuLimitsMissing: error
+  memoryRequestsMissing: error
+  memoryLimitsMissing: error
+  readinessProbeMissing: error
+  livenessProbeMissing: error
+  tagNotSpecified: error
+  pullPolicyNotAlways: warning
+  hostIPCSet: error
+  hostPIDSet: error
+  hostNetworkSet: error
+  hostPortSet: error
+  privilegeEscalationAllowed: error
+  runAsRootAllowed: error
+  runAsPrivileged: error
+  notReadOnlyRootFilesystem: warning
+  insecureCapabilities: error
+  dangerousCapabilities: error
+  automountServiceAccountToken: warning
