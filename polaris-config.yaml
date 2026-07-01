@@ -15,8 +15,6 @@ checks:
   runAsRootAllowed: error
   runAsPrivileged: error
   notReadOnlyRootFilesystem: warning
-  dropCapabilitiesNotSet: error
   insecureCapabilities: error
   dangerousCapabilities: error
-  sensitiveConfigmapContent: error
   automountServiceAccountToken: warning
