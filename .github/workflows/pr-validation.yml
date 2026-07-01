@@ -1,0 +1,81 @@
+name: PR Validation
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+  secret-detection:
+    name: Secret Detection
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  manifest-validation:
+    name: Manifest Validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install kubeconform
+        run: |
+          curl -sL https://github.com/yannh/kubeconform/releases/latest/download/kubeconform-linux-amd64.tar.gz | tar xz
+          sudo mv kubeconform /usr/local/bin/
+
+      - name: Run kubeconform
+        run: |
+          find . -name '*.yaml' -not -path './.github/*' | xargs kubeconform \
+            --kubernetes-version 1.32.0 \
+            --strict \
+            --summary \
+            --schema-location default \
+            --schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json' \
+            --ignore-missing-schemas
+
+      - uses: imranismail/setup-kustomize@v3
+
+      - name: Run kustomize build
+        run: |
+          for dir in apps/*/  namespaces/*/; do
+            if [ -f "${dir}kustomization.yaml" ]; then
+              echo "Building ${dir}..."
+              kustomize build "${dir}" > /dev/null
+            fi
+          done
+
+  lint:
+    name: Lint (Polaris)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install polaris
+        run: |
+          curl -sL https://github.com/FairwindsOps/polaris/releases/latest/download/polaris_linux_amd64.tar.gz | tar xz
+          sudo mv polaris /usr/local/bin/
+
+      - name: Run polaris
+        run: |
+          polaris audit \
+            --audit-path apps/ \
+            --config polaris-config.yaml \
+            --format pretty \
+            --set-exit-code-on-danger
+
+  security-scan:
+    name: Security Scan (Trivy)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          scan-type: config
+          scan-ref: apps/
+          exit-code: "1"
+          severity: HIGH,CRITICAL
