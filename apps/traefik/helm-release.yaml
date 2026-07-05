@@ -1,0 +1,87 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: traefik
+  namespace: infra
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: traefik
+      version: "41.0.1"
+      sourceRef:
+        kind: HelmRepository
+        name: traefik
+        namespace: infra
+      interval: 12h
+  values:
+    log:
+      level: DEBUG
+
+    providers:
+      kubernetesCRD:
+        allowCrossNamespace: true
+
+    ingressClass:
+      enabled: true
+      isDefaultClass: true
+      name: "traefik"
+
+    # Replaces apps/traefik/dashboard-ingressroute.yaml (pre-Helm) - the chart's
+    # built-in dashboard IngressRoute feature reproduces it exactly.
+    ingressRoute:
+      dashboard:
+        enabled: true
+        matchRule: "Host(`traefik.theorangeserver.net`)"
+        entryPoints: ["websecure"]
+        tls:
+          secretName: wildcard-certificate
+
+    # Container listens on unprivileged ports; the Services below remap to the
+    # privileged external ports, so no NET_BIND_SERVICE capability is needed.
+    ports:
+      web:
+        expose:
+          default: true
+          public: true
+      websecure:
+        expose:
+          default: true
+          public: false
+        transport:
+          respondingTimeouts:
+            readTimeout: 600s
+            writeTimeout: 600s
+            idleTimeout: 600s
+      websecure-pub:
+        port: 8444
+        exposedPort: 443
+        expose:
+          default: false
+          public: true
+        transport:
+          respondingTimeouts:
+            readTimeout: 600s
+            writeTimeout: 600s
+            idleTimeout: 600s
+
+    service:
+      annotations:
+        metallb.io/loadBalancerIPs: "192.168.0.241"
+      spec:
+        type: LoadBalancer
+        externalTrafficPolicy: Local
+      additionalServices:
+        public:
+          annotations:
+            metallb.io/loadBalancerIPs: "192.168.0.242"
+          spec:
+            type: LoadBalancer
+
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: 1000m
+        memory: 512Mi
