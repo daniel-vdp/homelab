@@ -30,7 +30,7 @@ spec:
         runAsGroup: 65534
       containers:
         - name: node-exporter
-          image: prom/node-exporter:v1.11.1
+          image: prom/node-exporter:v1.12.0
           args:
             - --path.rootfs=/host
             - --path.procfs=/host/proc

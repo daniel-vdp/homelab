@@ -29,7 +29,7 @@ spec:
         runAsGroup: 65534
       containers:
         - name: nfs-exporter
-          image: prom/node-exporter:v1.11.1
+          image: prom/node-exporter:v1.12.0
           args:
             # Only enable filesystem collector to track NFS disk usage
             - --collector.disable-defaults
