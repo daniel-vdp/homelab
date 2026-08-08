@@ -4,6 +4,7 @@ metadata:
   name: minecraft-backup
 spec:
   schedule: "0 * * * *"  # Every hour
+  concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 3
   jobTemplate:

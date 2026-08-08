@@ -5,6 +5,7 @@ metadata:
   namespace: app
 spec:
   schedule: "0 * * * *"  # Every hour
+  concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 2
   jobTemplate:
