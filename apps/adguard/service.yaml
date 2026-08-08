@@ -46,6 +46,7 @@ metadata:
   name: adguard-dns
   annotations:
     metallb.io/loadBalancerIPs: 192.168.0.244
+    svccontroller.k3s.cattle.io/enable: "false"
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
