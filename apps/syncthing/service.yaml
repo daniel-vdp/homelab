@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: syncthing
   annotations:
-    metallb.io/loadBalancerIPs: 192.168.0.246
+    metallb.io/loadBalancerIPs: 192.168.0.225
 spec:
   selector:
     app: syncthing

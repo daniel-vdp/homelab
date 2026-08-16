@@ -4,7 +4,7 @@ metadata:
   name: transmission
   namespace: media
   annotations:
-    metallb.io/loadBalancerIPs: 192.168.0.247
+    metallb.io/loadBalancerIPs: 192.168.0.226
 spec:
   type: LoadBalancer
   selector:
