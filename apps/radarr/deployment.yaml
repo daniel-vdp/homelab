@@ -27,7 +27,7 @@ spec:
         fsGroup: 1000
       containers:
         - name: radarr
-          image: linuxserver/radarr:6.2.1
+          image: linuxserver/radarr:6.3.0
           securityContext:
             readOnlyRootFilesystem: false
           resources:
