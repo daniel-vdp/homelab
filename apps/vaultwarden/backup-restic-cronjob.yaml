@@ -10,7 +10,7 @@ spec:
   failedJobsHistoryLimit: 2
   jobTemplate:
     spec:
-      activeDeadlineSeconds: 1800
+      activeDeadlineSeconds: 3600
       template:
         spec:
           securityContext:
