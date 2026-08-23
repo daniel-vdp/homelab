@@ -3,6 +3,8 @@ kind: CronJob
 metadata:
   name: immich-backup
   namespace: app
+  annotations:
+    kustomize.toolkit.fluxcd.io/ssa: IfNotPresent
 spec:
   schedule: "0 3 * * *"  # Daily at 3 AM
   successfulJobsHistoryLimit: 3
