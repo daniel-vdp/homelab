@@ -69,5 +69,5 @@ spec:
         cache:
           type: persistentVolumeClaim
           size: 10Gi
-          storageClassName: longhorn
+          storageClass: longhorn
           accessMode: ReadWriteOnce
