@@ -1,15 +1,12 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: wireguard
+  name: wireguard-namespace
   namespace: flux-system
 spec:
   interval: 1m
-  path: ./apps/wireguard
   prune: true
+  path: ./namespaces/wireguard
   sourceRef:
     kind: GitRepository
     name: flux-system
-  targetNamespace: wireguard
-  dependsOn:
-    - name: wireguard-namespace
