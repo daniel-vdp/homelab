@@ -3,6 +3,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: unifi-mongodb-data-longhorn
   namespace: infra
+  annotations:
+    kustomize.toolkit.fluxcd.io/ssa: IfNotPresent
 spec:
   storageClassName: longhorn
   accessModes:
