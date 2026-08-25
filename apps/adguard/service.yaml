@@ -49,7 +49,7 @@ metadata:
     svccontroller.k3s.cattle.io/enable: "false"
 spec:
   type: LoadBalancer
-  externalTrafficPolicy: Local
+  externalTrafficPolicy: Cluster
   selector:
     app: adguard
   ports:
