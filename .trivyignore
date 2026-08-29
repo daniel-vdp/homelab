@@ -8,6 +8,9 @@ KSV-0121
 # wireguard requires SYS_MODULE to load the WireGuard kernel module
 KSV-0120
 
+# wireguard requires privileged mode to load/manage the kernel module
+KSV-0017
+
 # readOnlyRootFilesystem - classified as warning; many apps require write access at runtime
 KSV-0014
 
